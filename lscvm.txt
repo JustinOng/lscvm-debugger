@@ -1,60 +1,75 @@
-0x20:
+0x20 (space):
 10:
   nop
-0x41:
+0x41 (A):
   # add
   push(pop() + pop())
-0x42:
+0x42 (B):
   quit()
-0x43:
-  
-0x44:
+0x43 (C):
+  # push opcode_index into opcode_stack
+  # set current opcode to pop()
+  pusho(opcode_index)
+  opcode_index = pop()
+0x44 (D):
   pop()
-0x45:
+0x45 (E):
   # read from heap
   # pushes pop() value onto the stack
   push(heap[pop()])
-0x46:  !!
+0x46: (F) !!
   # pushes the last pop() value on the stack onto the stack
   push(stack[-pop()])
-0x47:
+0x47 (G):
   # relative jump
   ip += pop()
-0x48: !! 
+0x48 (H): !! 
   # remove the last pop() value on the stack and push it
-0x49:
+0x49 (I):
   # print byte
-0x4a:
+0x4a (J):
   # a = pop()
   # b = pop()
   # comp = b > a (1 if b > a, 0 if b == a, -1 if b < a)
   push(comp)
-0x4b:
+0x4b (K):
   # write to heap
   i = pop()
   heap[i] = pop()
-0x4d:
+0x4d (M):
   # multiply
   push(pop() * pop())
-0x50: 
+0x50 (P): 
   # pop() and write it to the buffer
-0x52: ??
-0x53:
+0x52 (R):
+  # read opcode index from opcode stack
+  opcode_index = popo()
+0x53 (S):
   # subtract
   a = pop()
   b = pop()
   push(b - a)
-0x56:
+0x56 (V):
   # divide
   a = pop()
   b = pop()
   push(b / a)
-0x5a:
+0x5a (Z):
   # conditional (0) relative jump
   a = pop()
   b = pop()
   if (b == 0) ip += a
-0x61:
+0x61 (a):
   push(0)
 0x62 - 0x6a:
   push(0x61 + n) to push n
+a: 0
+b: 1
+c: 2
+d: 3
+e: 4
+f: 5
+g: 6
+h: 7
+i: 8
+j: 9
