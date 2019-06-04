@@ -1,0 +1,60 @@
+0x20:
+10:
+  nop
+0x41:
+  # add
+  push(pop() + pop())
+0x42:
+  quit()
+0x43:
+  
+0x44:
+  pop()
+0x45:
+  # read from heap
+  # pushes pop() value onto the stack
+  push(heap[pop()])
+0x46:  !!
+  # pushes the last pop() value on the stack onto the stack
+  push(stack[-pop()])
+0x47:
+  # relative jump
+  ip += pop()
+0x48: !! 
+  # remove the last pop() value on the stack and push it
+0x49:
+  # print byte
+0x4a:
+  # a = pop()
+  # b = pop()
+  # comp = b > a (1 if b > a, 0 if b == a, -1 if b < a)
+  push(comp)
+0x4b:
+  # write to heap
+  i = pop()
+  heap[i] = pop()
+0x4d:
+  # multiply
+  push(pop() * pop())
+0x50: 
+  # pop() and write it to the buffer
+0x52: ??
+0x53:
+  # subtract
+  a = pop()
+  b = pop()
+  push(b - a)
+0x56:
+  # divide
+  a = pop()
+  b = pop()
+  push(b / a)
+0x5a:
+  # conditional (0) relative jump
+  a = pop()
+  b = pop()
+  if (b == 0) ip += a
+0x61:
+  push(0)
+0x62 - 0x6a:
+  push(0x61 + n) to push n

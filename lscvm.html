@@ -1,0 +1,112 @@
+<html>
+  <head>
+    <title>LSCVM Debugger</title>
+    <style>
+      body {
+        font-family: monospace, monospace;
+      }
+
+      #input {
+        width: 100%;
+        height: 100px;
+      }
+
+      .display-val {
+        font-weight: bold;
+      }
+
+      table, tr, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+
+      th, td {
+        padding: 5px;
+        text-align: center;
+      }
+
+      .pane-container {
+        display: flex;
+      }
+
+      .pane {
+        display: inline-block;
+      }
+
+      .bp-set {
+        background-color: red;
+        color: white;
+      }
+
+      #display-print {
+        border: 1px solid grey;
+      }
+    </style>
+    <script src="main.js"></script>
+    <script src="lscvm.js"></script>
+    <script src="helpers.js"></script>
+  </head>
+  <body>
+    <textarea id="input" oninput="save_input(this);"></textarea>
+    <div>
+      <button onclick="load()" title="Load Code From Above">Load</button>
+      <button onclick="vm_reset()" title="Reset State">Reset</button>
+      <button onclick="vm_start()" title="Set ip=0 And Run">Run</button>
+      <button onclick="vm_continue()" title="Continue Running">Continue</button>
+      <button onclick="vm_single_step()" title="Single Step">Single Step</button>
+    </div>
+    <div>
+      <span title="How Many Instructions Are Loaded">Loaded Instructions: <span id="display-loaded" class="display-val"></span></span>
+      <span title="Current Operation">IP: <span id="display-ip" class="display-val"></span></span>
+    </div>
+    
+    <div>
+      Printed Characters:
+      <pre id="display-print"></pre>
+    </div>
+
+    <div class="pane-container">
+      <div class="pane">
+        <h3>Instructions</h3>
+        <table id="display-instructions">
+          <thead>
+            <tr>
+              <th>index</th>
+              <th>instruction</th>
+              <th>description</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="pane">
+        <h3>Stack</h3>
+        <table id="display-stack">
+          <thead>
+            <tr>
+              <th>index</th>
+              <th>data (dec)</th>
+              <th>data (hex)</th>
+              <th>data (chr)</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="pane">
+        <h3>Heap</h3>
+        <table id="display-heap">
+          <thead>
+            <tr>
+              <th>index</th>
+              <th>data (dec)</th>
+              <th>data (hex)</th>
+              <th>data (chr)</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

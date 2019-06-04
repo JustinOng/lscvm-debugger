@@ -1,0 +1,68 @@
+
+undefined8 main(int rdi)
+
+{
+  long lVar1;
+  int iVar2;
+  FILE *__stream;
+  long in_FS_OFFSET;
+  uint debug;
+  undefined flag [256];
+  char ptr_input [4104];
+  
+  lVar1 = *(long *)(in_FS_OFFSET + 0x28);
+  setvbuf(stdout,(char *)0x0,1,0);
+  setvbuf(stdin,(char *)0x0,1,0);
+  memset(&stack_pointer,0,0x4000);
+  signal(0xe,FUN_00101265);
+  alarm(10);
+  debug = (uint)(rdi == 2);
+  __stream = fopen("flag","r");
+  if (__stream == (FILE *)0x0) {
+    perror("[-] Flag file open error");
+                    /* WARNING: Subroutine does not return */
+    exit(-1);
+  }
+  fread(flag,1,0x100,__stream);
+  fclose(__stream);
+                    /* print welcome message */
+  exec_vm(
+          "cfMcfMhiMfAhiMfAhiMfAeiMaAeiMjAhhcMMdAgjcMMcAhhcMMhAhhcMMgAhhcMMbAdfgMMhAijMfAeiMaAgjcMMaAdfgMMhAeehMMfAeehMMeAeehMMcAhhcMMhAjjMfAeiMaAeehMMaAeehMMcAgjcMMdAhjMeAeiMaAhhcMMcAhhcMMdAhhcMMdAeehMMaAjjMcAeehMMeAhhcMMgAhhcMMfAhhcMMhAijMeAeiMiAijMfAjjMfAhjMeAjjMcAijMeAeiMaAgjcMMdAeehMMeAeiMaAhhcMMdAgjcMMbAgjcMMdAhhcMMbAgjcMMaAhhcMMdAjjMgAeiMaAhiMfAhiMfAhiMfAcfMPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP"
+          ,debug);
+                    /* print ID: */
+  exec_vm("eiMaAhiMcAeiMaAhjMfAijMbAPPPPP",debug);
+  fgets(ptr_input,0x1000,stdin);
+  exec_vm(ptr_input,debug);
+  iVar2 = strcmp(&stack_pointer,"lsc_user");
+  if (iVar2 == 0) {
+    strcpy(&weird_global_thing,&stack_pointer);
+    exec_vm("eiMaAhiMcAeiMaAhhcMMcAeehMMcAgjcMMdAeehMMhAeehMMdAeehMMdAdfgMMhAijMiAPPPPPPPPPPP",debug
+           );
+    fgets(ptr_input,0x1000,stdin);
+    exec_vm(ptr_input,debug);
+    iVar2 = strcmp(&stack_pointer,"hi_darkspeed-corp!");
+    if (iVar2 == 0) {
+                    /* prints flag here */
+      printf("\nLogin Successful! %s\n\n");
+      printf(&weird_global_thing);
+      exec_vm("cfMcfMeiMbAhhcMMdAefgMMbAhjMdAeiMaAhhcMMcAgjcMMdAgjcMMdAhjMiAeiMaAghMcAPPPPPPPPPPPPP"
+              ,debug);
+    }
+    else {
+      exec_vm(
+              "cfMhhcMMgAhhcMMbAeehMMeAdfgMMhAgjcMMbAeehMMdAhhcMMhAgjcMMbAeiMaAhhcMMcAeehMMcAgjcMMdAeehMMhAeehMMdAeehMMdAdfgMMhAijMiAeiMaAdfgMMdAghMdAdfgMMbAPPPPPPPPPPPPPPPPPPPPPP"
+              ,debug);
+    }
+  }
+  else {
+                    /* print wrong id */
+    exec_vm(
+            "cfMhhcMMcAhhcMMhAeiMaAhhcMMfAgjcMMcAgjcMMdAeehMMcAjjMgAeiMaAdfgMMdAghMdAdfgMMbAPPPPPPPPPPPPP"
+            ,debug);
+  }
+  if (lVar1 != *(long *)(in_FS_OFFSET + 0x28)) {
+                    /* WARNING: Subroutine does not return */
+    __stack_chk_fail();
+  }
+  return 0;
+}
