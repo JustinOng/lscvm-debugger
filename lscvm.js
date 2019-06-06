@@ -68,6 +68,7 @@ class Stack {
 
 const heap = new Heap();
 const stack = new Stack();
+const op_stack = new Stack();
 
 let ip = 0;
 let breakpoints = [];
@@ -83,11 +84,11 @@ function op_describe(op) {
     case 0x42:
       return "exit";
     case 0x43:
-      return "dunno";
+      return "call";
     case 0x44:
       return "remove top of stack";
     case 0x45:
-      return "push heap location to stack";
+      return "read heap";
     case 0x46:
       return "copy from end of stack and push";
     case 0x47:
@@ -99,13 +100,13 @@ function op_describe(op) {
     case 0x4a:
       return "compare and push result";
     case 0x4b:
-      return "write stack-2 to heap[stack-1]"
+      return "write heap"
     case 0x4d:
       return "multiply";
     case 0x50:
       return "print char";
     case 0x52:
-      return "dunno";
+      return "return";
     case 0x53:
       return "subtract";
     case 0x56:
@@ -143,7 +144,9 @@ function op_exec(op) {
       vm_exit();
       break;
     case 0x43:
-      // something weird not implemented yet
+      // call
+      op_stack.push(ip);
+      ip = stack.pop();
       break;
     case 0x44:
       stack.pop();
@@ -202,7 +205,8 @@ function op_exec(op) {
       print_output(String.fromCharCode(i & 0x7f));
       break;
     case 0x52:
-      // unknown
+      // return
+      ip = op_stack.pop()
       break;
     case 0x53:
       // subtract
