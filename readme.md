@@ -105,7 +105,7 @@ Write to the heap
 
 ```
 address = pop()
-heap[i] = address
+heap[address] = pop()
 ```
 
 ## Stack - Manipulation
