@@ -216,7 +216,7 @@ function op_exec(op) {
       break;
     case 0x56:
       // divide
-      i = stack.pop();
+      a = stack.pop();
       b = stack.pop();
       stack.push(Math.floor(b/a));
       break;
