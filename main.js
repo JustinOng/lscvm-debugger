@@ -82,9 +82,7 @@ function continue_op(step) {
       display_ip.innerText += " (Done)";
     }
 
-    if (error || breakpoint) {
-      print_instructions();
-    }
+    print_instructions();
 
     return;
   } else {
@@ -133,9 +131,9 @@ function print_instructions() {
     const op = ops[i];
 
     if (breakpoints.indexOf(parseInt(i)) !== -1) {
-      html += `<tr><td class="bp-set" title="Clear Breakpoint" onclick="clear_breakpoint(this.innerText)">${i}</td><td>${op.toString(16).padStart(2, "0")}</td><td>${op_describe(op)}</td></tr>`;
+      html += `<tr${ip == i ? ' class="current"':""}><td class="bp-set" title="Clear Breakpoint" onclick="clear_breakpoint(this.innerText)">${i}</td><td>${op.toString(16).padStart(2, "0")}</td><td>${op_describe(op)}</td></tr>`;
     } else {
-      html += `<tr><td title="Set Breakpoint" onclick="set_breakpoint(this.innerText);">${i}</td><td>${op.toString(16).padStart(2, "0")}</td><td>${op_describe(op)}</td></tr>`;
+      html += `<tr${ip == i ? ' class="current"':""}><td title="Set Breakpoint" onclick="set_breakpoint(this.innerText);">${i}</td><td>${op.toString(16).padStart(2, "0")}</td><td>${op_describe(op)}</td></tr>`;
     }
   }
 
