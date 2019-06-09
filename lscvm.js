@@ -146,7 +146,9 @@ function op_exec(op) {
     case 0x43:
       // call
       op_stack.push(ip);
-      ip = stack.pop();
+      i = stack.pop();
+      // i - 1 because this will be incremented after this is executed
+      ip = i - 1;
       break;
     case 0x44:
       stack.pop();
