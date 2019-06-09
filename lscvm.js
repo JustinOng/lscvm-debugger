@@ -31,10 +31,10 @@ class Stack {
   }
 
   read(i) {
-    if (this.stack.length - i < 0) {
-      throw new Error(`Out of stack bounds: ${i}`);
+    if ((this.stack.length - i - 1) < 0) {
+      throw new Error(`Reading out of stack bounds: ${i}`);
     }
-
+    
     return this.stack[this.stack.length - 1 - i];
   }
 

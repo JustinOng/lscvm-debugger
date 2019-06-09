@@ -69,7 +69,7 @@ function continue_op(step) {
     ip ++;
     display_ip.innerText = ip;
   } catch(err) {
-    console.error(`Failed to execute ${ip}: ${err}`)
+    console.error(`Failed to execute ${ip}:`, err)
     display_events.innerHTML += `(${ip}): ${err}<br/>`;
     error = err;
   }
