@@ -98,7 +98,7 @@ function op_describe(op) {
     case 0x49:
       return "print int";
     case 0x4a:
-      return "compare and push result";
+      return "compare";
     case 0x4b:
       return "write heap"
     case 0x4d:
@@ -112,7 +112,7 @@ function op_describe(op) {
     case 0x56:
       return "int divide";
     case 0x5a:
-      return "conditional relative jump by stack-1 if stack-2==0"
+      return "conditional relative jump"
     case 0x61:
     case 0x62:
     case 0x63:
