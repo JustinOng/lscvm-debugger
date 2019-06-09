@@ -35,7 +35,7 @@ class Stack {
       throw new Error(`Out of stack bounds: ${i}`);
     }
 
-    return this.stack[this.stack.length - i];
+    return this.stack[this.stack.length - 1 - i];
   }
 
   pop(i) {
