@@ -5,6 +5,7 @@ let display_print;
 let display_heap;
 let display_stack;
 let display_instructions;
+let display_events;
 
 window.onload = () => {
   load_input(document.querySelector("#input"));
@@ -14,6 +15,7 @@ window.onload = () => {
   display_heap = document.querySelector("#display-heap");
   display_stack = document.querySelector("#display-stack");
   display_instructions = document.querySelector("#display-instructions");
+  display_events = document.querySelector("#display-events");
 }
 
 function load() {
@@ -32,6 +34,7 @@ function vm_reset() {
   ip = 0;
   display_ip.innerText = ip;
   display_print.innerHTML = "";
+  display_events.innerHTML = "";
   stack.clear();
   heap.clear();
   dump_mem(display_heap, heap.get());
@@ -59,11 +62,15 @@ function continue_op(step) {
   }
 
   try {
-    op_exec(ops[ip]);
+    const result = op_exec(ops[ip]);
+    if (result) {
+      display_events.innerHTML += `(${ip}): ${result}<br/>`;
+    }
     ip ++;
     display_ip.innerText = ip;
   } catch(err) {
     console.error(`Failed to execute ${ip}: ${err}`)
+    display_events.innerHTML += `(${ip}): ${err}<br/>`;
     error = err;
   }
   
@@ -112,13 +119,11 @@ function print_output(data) {
        && data.charCodeAt(0) !== 0x0A
        && data.charCodeAt(0) !== 0x0D
     ) {
-      console.log(data.charCodeAt(0), data.toString(16));
       str = "0x" + data.toString(16);
     }
   }
 
   if (str === false) {
-    console.log(`"${data}"`)
     str = data.toString();
   }
 
@@ -148,7 +153,6 @@ function set_breakpoint(ip) {
 
   console.log(`Added breakpoint at ${ip}`);
   print_instructions();
-  console.log(breakpoints);
 }
 
 function clear_breakpoint(ip) {

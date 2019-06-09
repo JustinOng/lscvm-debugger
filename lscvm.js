@@ -142,14 +142,14 @@ function op_exec(op) {
       break;
     case 0x42:
       vm_exit();
-      break;
+      return "Exit"
     case 0x43:
       // call
       op_stack.push(ip);
       i = stack.pop();
       // i - 1 because this will be incremented after this is executed
       ip = i - 1;
-      break;
+      return `call ${i}`
     case 0x44:
       stack.pop();
       break;
@@ -165,8 +165,9 @@ function op_exec(op) {
       break;
     case 0x47:
       // relative jump
+      i = ip;
       ip += stack.pop();
-      break;
+      return `jump from ${i} to ${ip}`
     case 0x48:
       // remove from stack and push
       i = stack.pop();
@@ -181,7 +182,7 @@ function op_exec(op) {
       // compare
       a = stack.pop();
       b = stack.pop();
-      let c = 0;
+      c = 0;
       if (a == b) {
         c = 0;
       } else if (a < b) {
@@ -190,7 +191,7 @@ function op_exec(op) {
         c = -1;
       }
       stack.push(c);
-      break;
+      return `compare(${b}, ${a})= ${c}`
     case 0x4b:
       // heap write
       i = stack.pop();
@@ -209,7 +210,7 @@ function op_exec(op) {
     case 0x52:
       // return
       ip = op_stack.pop()
-      break;
+      return `return to ${ip}`
     case 0x53:
       // subtract
       a = stack.pop();
@@ -227,7 +228,9 @@ function op_exec(op) {
       a = stack.pop();
       b = stack.pop();
       if (b === 0) {
+        i = ip;
         ip += a;
+        return `jump from ${i} to ${ip}`
       }
       break;
     case 0x61:
