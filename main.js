@@ -54,6 +54,7 @@ function vm_single_step() {
   continue_op(true);
 }
 
+const events = [];
 function continue_op(step) {
   let error;
 
@@ -64,18 +65,23 @@ function continue_op(step) {
   try {
     const result = op_exec(ops[ip]);
     if (result) {
-      display_events.innerHTML += `(${ip}): ${result}<br/>`;
+      events.push(`(${ip}): ${result}`);
     }
     ip ++;
-    display_ip.innerText = ip;
   } catch(err) {
     console.error(`Failed to execute ${ip}:`, err)
-    display_events.innerHTML += `(${ip}): ${err}<br/>`;
+    events.push(`(${ip}): ${err}`);
     error = err;
   }
   
   const breakpoint = breakpoints.indexOf(ip) !== -1;
   if (error || ip >= ops.length || breakpoint || step) {
+    display_ip.innerText = ip;
+
+    // trim events and limit to the last 100
+    events.splice(0, events.length - 100);
+    display_events.innerHTML = events.join("<br/>");
+
     dump_mem(display_heap, heap.get());
     dump_mem(display_stack, stack.get());
 
