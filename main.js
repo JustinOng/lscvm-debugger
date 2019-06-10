@@ -103,7 +103,11 @@ function dump_mem(ele, mem) {
   let html = "";
   for (const i in mem) {
     const data = mem[i];
-    html += `<tr><td>${i}</td><td>${data}</td><td>${data.toString(16)}</td><td>${data >= 0x20 && data <= 0x7f ? String.fromCharCode(data):"."}</td></tr>`;
+    try {
+      html += `<tr><td>${i}</td><td>${data}</td><td>${data.toString(16)}</td><td>${data >= 0x20 && data <= 0x7f ? String.fromCharCode(data):"."}</td></tr>`;
+    } catch {
+      continue;
+    }
   }
   ele.querySelector("tbody").innerHTML = html;
 }

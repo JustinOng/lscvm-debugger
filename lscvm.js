@@ -9,10 +9,13 @@ class Heap {
       throw Error(`Memory read access violation: ${i}`);
     }
 
-    return this.heap[i];
+    return typeof this.heap[i] === "undefined" ? 0 : this.heap[i];
   }
 
   write(i, data) {
+    if (typeof data === "undefined") {
+      throw Error(`Write of undefined to heap[${i}]`);
+    }
     this.heap[i] = data;
   }
 
@@ -54,6 +57,9 @@ class Stack {
   }
 
   push(data) {
+    if (typeof data === "undefined") {
+      throw Error("Stack.push with undefined?");
+    }
     this.stack.push(data);
   }
 
