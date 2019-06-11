@@ -50,7 +50,8 @@ class Stack {
       if (i >= this.stack.length) {
         throw Error(`Del error: ${i}`);
       }
-      return this.stack.splice(i, 1)[0];
+      
+      return this.stack.splice(this.stack.length - i - 1, 1)[0];
     } else {
       return this.stack.pop();
     }
