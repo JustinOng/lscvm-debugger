@@ -11,7 +11,7 @@ There are two stacks:
 There is also a Heap:
 * This supports random access: there are opcodes provided that can read and write to specific locations on the heap
 
-# Opcodes:
+# LSCVM Opcodes:
 
 General principle: If an address is needed, it is popped first, then any other value
 
@@ -120,7 +120,7 @@ address = pop()
 push(stack[-address])
 ```
 
-### HelpNameMe
+### FindRemove
 Opcode: `H` (`0x48`)
 
 Same as Find, except that the value is then removed from the stack
@@ -181,7 +181,7 @@ Opcode: `M` (`0x4D`)
 ```
 a = pop()
 b = pop()
-push(b *+* a)
+push(b * a)
 ```
 
 ### Divide
